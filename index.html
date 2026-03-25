@@ -1,441 +1,639 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Paid to Scroll</title>
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Get Paid to Scroll</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(22px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes btnPulse {
-            0%, 100% { box-shadow: 0 0 28px rgba(74,222,128,0.5); }
-            50%       { box-shadow: 0 0 52px rgba(74,222,128,0.85); }
-        }
-        @keyframes popIn {
-            0%   { transform: scale(0.6); opacity: 0; }
-            70%  { transform: scale(1.08); }
-            100% { transform: scale(1);   opacity: 1; }
-        }
-        @keyframes iconGlow {
-            0%, 100% { box-shadow: 0 8px 40px rgba(74,222,128,0.4); }
-            50%       { box-shadow: 0 8px 65px rgba(74,222,128,0.7); }
-        }
+    :root {
+      --green: #2ee87a;
+      --green-dim: #1db954;
+      --green-glow: rgba(46, 232, 122, 0.35);
+      --green-faint: rgba(46, 232, 122, 0.08);
+      --bg: #060c08;
+      --card: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --text-muted: #5a7a5a;
+      --text-sub: #8a9e8a;
+    }
 
-        html {
-            height: 100%;
-        }
+    html { scroll-behavior: smooth; }
 
-        body {
-            min-height: 100%;
-            /* Full-screen dark background with centered green glow */
-            background-color: #050c07;
-            background-image:
-                radial-gradient(ellipse 80% 55% at 50% 0%,
-                    rgba(10, 80, 40, 0.75) 0%,
-                    rgba(5, 30, 15, 0.5) 45%,
-                    transparent 70%);
-            background-attachment: fixed;
-            background-size: 100% 100%;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: #fff;
-            -webkit-font-smoothing: antialiased;
-        }
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
 
-        .wrapper {
-            max-width: 480px;
-            margin: 0 auto;
-            min-height: 100vh;
-            position: relative;
-            z-index: 1;
-        }
+    /* ── Ambient background orbs ── */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+      opacity: 0.18;
+    }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #2ee87a, transparent 70%);
+      top: -150px; left: 50%;
+      transform: translateX(-50%);
+      animation: float1 8s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #00c853, transparent 70%);
+      bottom: 200px; right: -80px;
+      animation: float2 10s ease-in-out infinite;
+    }
+    .orb-3 {
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, #69f0ae, transparent 70%);
+      bottom: 400px; left: -60px;
+      animation: float2 12s ease-in-out infinite reverse;
+    }
 
-        /* ─── Pages ─── */
-        .page {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 70px 22px 80px;
-            min-height: 100vh;
-        }
-        .page.active {
-            display: flex;
-            animation: fadeInUp 0.45s ease-out both;
-        }
+    @keyframes float1 {
+      0%, 100% { transform: translateX(-50%) translateY(0px); }
+      50% { transform: translateX(-50%) translateY(30px); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
 
-        /* ─── App Icon ─── */
-        .app-icon {
-            width: 95px;
-            height: 95px;
-            border-radius: 24px;
-            overflow: hidden;
-            margin-bottom: 44px;
-            animation: iconGlow 3s ease-in-out infinite;
-            flex-shrink: 0;
-        }
-        .app-icon img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+    /* ── Page wrapper ── */
+    .page {
+      max-width: 430px;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 56px 20px 140px;
+      position: relative;
+      z-index: 1;
+    }
 
-        /* ─── PAGE 1 ─── */
-        .headline {
-            font-size: 56px;
-            font-weight: 900;
-            text-align: center;
-            line-height: 1.05;
-            letter-spacing: -1.5px;
-            margin-bottom: 22px;
-            background: linear-gradient(165deg, #c5d5cb 0%, #4ade80 60%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    /* ── App icon ── */
+    .app-icon-wrap {
+      position: relative;
+      margin-bottom: 20px;
+      animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.6); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .app-icon {
+      position: relative;
+      width: 80px; height: 80px;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(46,232,122,0.3),
+        0 8px 40px rgba(46,232,122,0.4),
+        0 0 80px rgba(46,232,122,0.15);
+    }
+    .app-icon img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-        .sub {
-            font-size: 16.5px;
-            color: #7a9a88;
-            text-align: center;
-            line-height: 1.65;
-            margin-bottom: 56px;
-            max-width: 310px;
-        }
+    /* ── Trending badge ── */
+    .trending-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(46,232,122,0.1);
+      border: 1px solid rgba(46,232,122,0.25);
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 26px;
+      animation: fadeUp 0.5s 0.2s ease both;
+      backdrop-filter: blur(8px);
+    }
+    .trending-dot {
+      width: 7px; height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
 
-        .btn-stack {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
+    /* ── Headline ── */
+    .headline {
+      text-align: center;
+      font-size: 58px;
+      font-weight: 900;
+      line-height: 1.0;
+      margin-bottom: 18px;
+      letter-spacing: -2.5px;
+      animation: fadeUp 0.5s 0.3s ease both;
+    }
+    .headline .white { color: #ffffff; }
+    .headline .green {
+      color: var(--green);
+      text-shadow: 0 0 40px rgba(46,232,122,0.5);
+    }
 
-        .btn-green {
-            width: 100%;
-            padding: 22px 20px;
-            background: #4ade80;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            text-align: center;
-            animation: btnPulse 2.8s ease-in-out infinite;
-            transition: transform 0.13s;
-        }
-        .btn-green:active { transform: scale(0.97); }
+    .subtitle {
+      text-align: center;
+      color: var(--text-sub);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.65;
+      margin-bottom: 36px;
+      max-width: 290px;
+      animation: fadeUp 0.5s 0.4s ease both;
+    }
+    .subtitle strong { color: #b0d0b0; font-weight: 600; }
 
-        .btn-green .b-main {
-            display: block;
-            font-size: 20px;
-            font-weight: 900;
-            color: #060e09;
-            margin-bottom: 5px;
-        }
-        .btn-green .b-sub {
-            display: block;
-            font-size: 13px;
-            color: rgba(6,14,9,0.55);
-            font-weight: 500;
-        }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-        .btn-dark {
-            width: 100%;
-            padding: 22px 20px;
-            background: #0d1c13;
-            border: 1.5px solid #1c2e22;
-            border-radius: 20px;
-            cursor: pointer;
-            text-align: center;
-            transition: border-color 0.2s, transform 0.13s;
-        }
-        .btn-dark:hover  { border-color: rgba(74,222,128,0.3); }
-        .btn-dark:active { transform: scale(0.97); }
+    /* ── Stats ── */
+    .stats-row {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      display: flex;
+      align-items: stretch;
+      margin-bottom: 24px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      animation: fadeUp 0.5s 0.5s ease both;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.07),
+        0 4px 30px rgba(0,0,0,0.4);
+    }
+    .stat {
+      flex: 1;
+      padding: 18px 8px;
+      text-align: center;
+      border-right: 1px solid var(--card-border);
+      position: relative;
+    }
+    .stat:last-child { border-right: none; }
+    .stat::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 40%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--green), transparent);
+      opacity: 0.5;
+    }
+    .stat-value {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -0.5px;
+      text-shadow: 0 0 20px rgba(46,232,122,0.4);
+    }
+    .stat-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 5px;
+    }
 
-        .btn-dark .b-main {
-            display: block;
-            font-size: 20px;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 5px;
-        }
-        .btn-dark .b-sub {
-            display: block;
-            font-size: 13px;
-            color: #4b6358;
-            font-weight: 500;
-        }
+    /* ── Steps card ── */
+    .steps-card {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 36px;
+      backdrop-filter: blur(20px);
+      animation: fadeUp 0.5s 0.6s ease both;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.07),
+        0 4px 30px rgba(0,0,0,0.4);
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 22px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      transition: background 0.2s;
+    }
+    .step:hover { background: rgba(46,232,122,0.04); }
+    .step:last-child { border-bottom: none; }
 
-        /* ─── PAGE 2 ─── */
-        .youre-in-row {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 20px;
-            animation: popIn 0.5s ease-out both;
-        }
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 34px;
+      bottom: -1px;
+      width: 2px;
+      height: 22px;
+      background: linear-gradient(to bottom, rgba(46,232,122,0.3), transparent);
+      z-index: 1;
+    }
 
-        .check-circle {
-            width: 66px; height: 66px;
-            background: #4ade80;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 0 30px rgba(74,222,128,0.6);
-        }
-        .check-circle svg {
-            width: 32px; height: 32px;
-            stroke: #060e09;
-            stroke-width: 3.5;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
+    .step-num {
+      width: 32px; height: 32px;
+      min-width: 32px;
+      background: linear-gradient(135deg, var(--green), #1db954);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #060c08;
+      box-shadow: 0 4px 16px rgba(46,232,122,0.45);
+      position: relative;
+      z-index: 2;
+    }
+    .step-content h3 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #e8f5e8;
+      margin-bottom: 5px;
+      letter-spacing: -0.2px;
+    }
+    .step-content p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .step-content p strong { color: var(--text-sub); font-weight: 500; }
 
-        .youre-in-text {
-            font-size: 52px;
-            font-weight: 900;
-            letter-spacing: -1px;
-            background: linear-gradient(165deg, #c5d5cb 0%, #4ade80 60%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    /* ── Social proof ticker ── */
+    .social-proof {
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 20px;
+      animation: fadeUp 0.5s 0.7s ease both;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 12px;
+      animation: ticker 22s linear infinite;
+      width: max-content;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 8px 14px;
+      white-space: nowrap;
+      font-size: 12px;
+      color: var(--text-sub);
+      backdrop-filter: blur(10px);
+    }
+    .ticker-avatar {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), #1db954);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: #060c08;
+    }
+    .ticker-amount { color: var(--green); font-weight: 700; }
 
-        .qualified {
-            font-size: 16px;
-            color: #7a9a88;
-            text-align: center;
-            line-height: 1.7;
-            margin-bottom: 34px;
-            max-width: 340px;
-        }
+    /* ── CTA ── */
+    .cta-wrapper {
+      position: fixed;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      padding: 16px 20px 32px;
+      background: linear-gradient(to top, #060c08 55%, transparent);
+      z-index: 100;
+    }
+    .cta-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #4dffa0, #2ee87a, #1db954);
+      border: none;
+      border-radius: 16px;
+      padding: 18px;
+      font-size: 17px;
+      font-weight: 800;
+      color: #060c08;
+      cursor: pointer;
+      letter-spacing: -0.2px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow:
+        0 4px 30px rgba(46,232,122,0.5),
+        0 0 0 1px rgba(46,232,122,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+      transform: translateX(-100%);
+      animation: shimmer 3s ease-in-out infinite 1.5s;
+    }
+    @keyframes shimmer {
+      to { transform: translateX(100%); }
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow:
+        0 8px 40px rgba(46,232,122,0.6),
+        0 0 0 1px rgba(46,232,122,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+    .cta-btn:active { transform: scale(0.98) translateY(0); }
 
-        .btn-download {
-            width: 100%;
-            padding: 22px 28px;
-            background: #4ade80;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            animation: btnPulse 2.8s ease-in-out infinite;
-            text-decoration: none;
-            transition: transform 0.13s;
-            margin-bottom: 28px;
-        }
-        .btn-download:active { transform: scale(0.97); }
-        .btn-download svg { width: 26px; height: 26px; fill: #060e09; flex-shrink: 0; }
-        .dl-text {
-            font-size: 21px;
-            font-weight: 900;
-            color: #060e09;
-            letter-spacing: 1.5px;
-        }
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-sheet {
+      width: 100%;
+      max-width: 430px;
+      background: #0d1a0f;
+      border: 1px solid rgba(46,232,122,0.2);
+      border-bottom: none;
+      border-radius: 28px 28px 0 0;
+      padding: 12px 28px 44px;
+      text-align: center;
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+      box-shadow:
+        0 -4px 60px rgba(0,0,0,0.7),
+        0 -1px 0 rgba(46,232,122,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .modal-sheet::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 60%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--green), transparent);
+    }
+    .modal-overlay.active .modal-sheet {
+      transform: translateY(0);
+    }
 
-        /* Journey Card */
-        .journey-card {
-            width: 100%;
-            background: #0d1c13;
-            border-radius: 22px;
-            padding: 26px 20px 10px;
-            margin-bottom: 22px;
-            border: 1px solid #172519;
-        }
-        .journey-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2.5px;
-            color: #4b6358;
-            text-align: center;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-        .step {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 18px 0;
-            border-top: 1px solid #172519;
-        }
-        .step:first-of-type { border-top: none; }
+    .modal-handle {
+      width: 40px; height: 4px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 4px;
+      margin: 0 auto 28px;
+    }
 
-        .step-num {
-            width: 34px; height: 34px;
-            background: #4ade80;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 16px;
-            font-weight: 900;
-            color: #060e09;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-        .step-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 5px;
-        }
-        .step-desc {
-            font-size: 13.5px;
-            color: #527060;
-            line-height: 1.5;
-        }
+    .modal-icon {
+      width: 64px; height: 64px;
+      background: rgba(46,232,122,0.12);
+      border: 1px solid rgba(46,232,122,0.25);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 28px;
+      box-shadow: 0 0 30px rgba(46,232,122,0.2);
+    }
 
-        /* Important Box */
-        .important-box {
-            width: 100%;
-            background: #0d1c13;
-            border: 1.5px solid #b91c1c;
-            border-radius: 18px;
-            padding: 22px 18px 20px;
-            position: relative;
-            margin-bottom: 24px;
-        }
-        .imp-badge {
-            position: absolute;
-            top: -13px;
-            right: 16px;
-            background: #dc2626;
-            color: #fff;
-            font-size: 11.5px;
-            font-weight: 800;
-            padding: 3px 13px;
-            border-radius: 20px;
-            letter-spacing: 0.3px;
-        }
-        .imp-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .imp-header span.lock { font-size: 20px; }
-        .imp-title {
-            font-size: 17px;
-            font-weight: 800;
-            color: #fff;
-        }
-        .imp-desc {
-            font-size: 14px;
-            color: #527060;
-            line-height: 1.7;
-        }
-        .imp-desc strong { color: #4ade80; font-weight: 800; }
+    .modal-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .modal-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+    .modal-title span {
+      color: var(--green);
+      text-shadow: 0 0 30px rgba(46,232,122,0.5);
+    }
+    .modal-desc {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-        .trusted {
-            font-size: 13px;
-            color: #354e3e;
-            text-align: center;
-        }
+    .modal-highlight {
+      background: rgba(46,232,122,0.07);
+      border: 1px solid rgba(46,232,122,0.18);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+    .modal-highlight-icon {
+      font-size: 22px;
+      min-width: 30px;
+      text-align: center;
+    }
+    .modal-highlight-text {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+    .modal-highlight-text strong { color: var(--green); font-weight: 600; }
 
-        @media (max-width: 360px) {
-            .headline { font-size: 44px; }
-            .youre-in-text { font-size: 40px; }
-            .app-icon { width: 80px; height: 80px; border-radius: 20px; }
-            .page { padding: 50px 16px 60px; }
-        }
-    </style>
+    .modal-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #4dffa0, #2ee87a, #1db954);
+      border: none;
+      border-radius: 14px;
+      padding: 17px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #060c08;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow:
+        0 4px 25px rgba(46,232,122,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+      letter-spacing: -0.2px;
+    }
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 35px rgba(46,232,122,0.55), inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+    .modal-btn:active { transform: scale(0.98); }
+
+    @media (max-width: 400px) {
+      .headline { font-size: 48px; }
+    }
+  </style>
 </head>
 <body>
-<div class="wrapper">
 
-    <!-- ════════════ PAGE 1 ════════════ -->
-    <div class="page active" id="page1">
+  <!-- Ambient orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
 
-        <div class="app-icon">
-            <img src="https://i.imgur.com/1UmZT5o.png" alt="Freecash">
-        </div>
+  <div class="page">
 
-        <h1 class="headline">Get Paid to Scroll</h1>
-
-        <p class="sub">Join thousands earning daily by completing offers and cashing out instantly.</p>
-
-        <div class="btn-stack">
-            <button class="btn-green" onclick="goPage2()">
-                <span class="b-main">I'm over 21</span>
-                <span class="b-sub">Instant Payouts: PayPal, CashApp, Venmo, Crypto &amp; Wire</span>
-            </button>
-            <button class="btn-dark" onclick="goPage2()">
-                <span class="b-main">I'm under 21</span>
-                <span class="b-sub">Limited Payouts: Wire Transfer Only</span>
-            </button>
-        </div>
-
+    <!-- App Icon (no spinning ring) -->
+    <div class="app-icon-wrap">
+      <div class="app-icon">
+        <img src="https://i.imgur.com/1UmZT5o.png" alt="App Logo" />
+      </div>
     </div>
 
-    <!-- ════════════ PAGE 2 ════════════ -->
-    <div class="page" id="page2">
-
-        <div class="app-icon">
-            <img src="https://i.imgur.com/1UmZT5o.png" alt="Freecash">
-        </div>
-
-        <div class="youre-in-row">
-            <div class="check-circle">
-                <svg viewBox="0 0 24 24">
-                    <polyline points="20 6 9 17 4 12"/>
-                </svg>
-            </div>
-            <div class="youre-in-text">You're In!</div>
-        </div>
-
-        <p class="qualified">Your account is pre-qualified for higher payouts. Download the app to activate full access.</p>
-
-        <a id="ctaBtn" href="#" class="btn-download">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-            </svg>
-            <span class="dl-text">DOWNLOAD NOW</span>
-        </a>
-
-        <div class="journey-card">
-            <div class="journey-label">Your Earning Journey</div>
-
-            <div class="step">
-                <div class="step-num">1</div>
-                <div>
-                    <div class="step-title">Download the Freecash App</div>
-                    <div class="step-desc">Available on iOS &amp; Android — Takes less than 60 seconds</div>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-num">2</div>
-                <div>
-                    <div class="step-title">Complete Daily Offers</div>
-                    <div class="step-desc">Watch videos, test apps &amp; games, or take surveys!</div>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-num">3</div>
-                <div>
-                    <div class="step-title">Cash Out Your Earnings</div>
-                    <div class="step-desc">Instant Payouts: PayPal, CashApp, Venmo, Crypto &amp; Wire</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="important-box">
-            <div class="imp-badge">⚠️ IMPORTANT</div>
-            <div class="imp-header">
-                <span class="lock">🔒</span>
-                <span class="imp-title">Activation Required</span>
-            </div>
-            <p class="imp-desc">New users: Complete <strong>2 quick offers</strong> to unlock paid to scroll features and start earning rewards!</p>
-        </div>
-
-        <p class="trusted">Trusted by over 500,000 users earning money daily</p>
-
+    <!-- Trending Badge -->
+    <div class="trending-badge">
+      <div class="trending-dot"></div>
+      Trending in the US
     </div>
 
-</div>
-<script>
+    <!-- Headline -->
+    <div class="headline">
+      <span class="white">Get Paid<br></span>
+      <span class="green">to Scroll</span>
+    </div>
+
+    <p class="subtitle">
+      Real cash for your phone time.<br>
+      <strong>$5 just for signing up.</strong><br>
+      Instant PayPal cashout.
+    </p>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-value">$200–$500+</div>
+        <div class="stat-label">Weekly Earnings</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">500K+</div>
+        <div class="stat-label">Members</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">4.7★</div>
+        <div class="stat-label">App Store</div>
+      </div>
+    </div>
+
+    <!-- Live activity ticker -->
+    <div class="social-proof">
+      <div class="ticker-track" id="ticker"></div>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps-card">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Sign up &amp; select 21+</h3>
+          <p>Scroll rewards only unlock for <strong>21+ members</strong>. Select it at signup to access everything.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Complete 2 offers to activate scrolling</h3>
+          <p>A quick game or survey. Activates <strong>scroll earning</strong> &amp; all high-paying offers. You earn doing them.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Get paid</h3>
+          <p>Scroll runs in the background. Cash out to <strong>PayPal, Visa or Crypto</strong>. No minimum.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Fixed CTA -->
+  <div class="cta-wrapper">
+    <button class="cta-btn" onclick="openModal()">Start Earning Now &nbsp;→</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal-sheet" id="modalSheet">
+      <div class="modal-handle"></div>
+      <div class="modal-icon">🔓</div>
+      <div class="modal-tag">Before You Go</div>
+      <div class="modal-title">Select <span>21+</span> when<br>you sign up</div>
+      <p class="modal-desc">This unlocks the scroll earning feature and all high-paying offers on Freecash.</p>
+      <div class="modal-highlight">
+        <div class="modal-highlight-icon">💸</div>
+        <div class="modal-highlight-text">
+          <strong>Without 21+ selected</strong>, you'll miss out on scroll earnings and premium high-paying offers.
+        </div>
+      </div>
+      <button class="modal-btn" onclick="goToOffer()">Got it &nbsp;→</button>
+    </div>
+  </div>
+
+  <script>
     // URL parameter passthrough function
     const appendUrlParams = (baseUrl) => {
         const params = window.location.search;
@@ -445,21 +643,62 @@
             : baseUrl + params;
     };
 
-    function goPage2() {
-        document.getElementById('page1').classList.remove('active');
-        document.getElementById('page2').classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // Detect if Android
+    const isAndroid = () => /android/i.test(navigator.userAgent);
 
-    // Set CTA link with params on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        const baseUrl = 'https://raintrks.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpLWIiLCJ1IjoiNjgxZTE1ODE1ZTM2NWM2NDhjNGQwNzk1IiwidHMiOjE3NzQxMTU2ODI2ODN9?s2=sierra-suffer-one';
-        document.getElementById('ctaBtn').href = appendUrlParams(baseUrl);
-    });
-</script>
+    // Break out of TikTok WebView into native browser
+    const breakToNativeBrowser = (url) => {
+        if (isAndroid()) {
+            // Android Intent URL - forces default browser
+            const intentUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;end`;
+            window.location.href = intentUrl;
+        } else {
+            // iOS - x-safari-https scheme bypasses TikTok's confirmation dialog
+            window.location.href = url.replace(/^https:\/\//, 'x-safari-https://');
+        }
+    };
+
+    const tickerData = [
+      { init: 'JM', name: 'James M.', amount: '$47.50', time: '2m ago' },
+      { init: 'SR', name: 'Sarah R.', amount: '$112.00', time: '5m ago' },
+      { init: 'DK', name: 'David K.', amount: '$23.75', time: '8m ago' },
+      { init: 'AL', name: 'Ashley L.', amount: '$89.20', time: '11m ago' },
+      { init: 'MR', name: 'Mike R.', amount: '$310.00', time: '15m ago' },
+      { init: 'TC', name: 'Tanya C.', amount: '$56.40', time: '18m ago' },
+      { init: 'BW', name: 'Brandon W.', amount: '$178.90', time: '21m ago' },
+    ];
+
+    function buildTicker() {
+      const track = document.getElementById('ticker');
+      const doubled = [...tickerData, ...tickerData];
+      track.innerHTML = doubled.map(d => `
+        <div class="ticker-item">
+          <div class="ticker-avatar">${d.init}</div>
+          <span>${d.name} cashed out</span>
+          <span class="ticker-amount">${d.amount}</span>
+          <span style="color:#334a33;font-size:11px">${d.time}</span>
+        </div>
+      `).join('');
+    }
+    buildTicker();
+
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+    
+    // Redirect to offer with params + browser break
+    function goToOffer() {
+      const baseUrl = 'https://rainawards.com/r/eyJ0IjoiZnJlZWNhc2gtY3BpLWIiLCJ1IjoiNjgxZTE1ODE1ZTM2NWM2NDhjNGQwNzk1IiwidHMiOjE3NzQ0NjU3NzU3OTJ9?s2=sam-eat-out-one';
+      const finalUrl = appendUrlParams(baseUrl);
+      breakToNativeBrowser(finalUrl);
+    }
+  </script>
+
 </body>
 </html>
-
-
-
-
