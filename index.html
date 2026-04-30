@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Get Paid To Game</title>
+  <title>Get Paid to Scroll</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,6 +32,7 @@
       overflow-x: hidden;
     }
 
+    /* ── Ambient background orbs ── */
     .bg-orb {
       position: fixed;
       border-radius: 50%;
@@ -69,6 +70,7 @@
       50% { transform: translateY(-20px); }
     }
 
+    /* ── Page wrapper ── */
     .page {
       max-width: 430px;
       width: 100%;
@@ -81,6 +83,7 @@
       z-index: 1;
     }
 
+    /* ── App icon ── */
     .app-icon-wrap {
       position: relative;
       margin-bottom: 20px;
@@ -106,6 +109,7 @@
       display: block;
     }
 
+    /* ── Trending badge ── */
     .trending-badge {
       display: inline-flex;
       align-items: center;
@@ -135,9 +139,10 @@
       50% { opacity: 0.5; transform: scale(0.8); }
     }
 
+    /* ── Headline ── */
     .headline {
       text-align: center;
-      font-size: 54px;
+      font-size: 58px;
       font-weight: 900;
       line-height: 1.0;
       margin-bottom: 18px;
@@ -157,7 +162,7 @@
       font-weight: 400;
       line-height: 1.65;
       margin-bottom: 36px;
-      max-width: 310px;
+      max-width: 290px;
       animation: fadeUp 0.5s 0.4s ease both;
     }
     .subtitle strong { color: #b0d0b0; font-weight: 600; }
@@ -167,6 +172,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ── Stats ── */
     .stats-row {
       width: 100%;
       background: var(--card);
@@ -200,7 +206,7 @@
       opacity: 0.5;
     }
     .stat-value {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 800;
       color: var(--green);
       letter-spacing: -0.5px;
@@ -215,6 +221,7 @@
       margin-top: 5px;
     }
 
+    /* ── Steps card ── */
     .steps-card {
       width: 100%;
       background: var(--card);
@@ -276,16 +283,11 @@
     .step-content p {
       font-size: 13px;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.55;
     }
     .step-content p strong { color: var(--text-sub); font-weight: 500; }
-    .step-content .meta {
-      font-size: 11.5px;
-      color: rgba(138,158,138,0.6);
-      margin-top: 4px;
-      letter-spacing: 0.1px;
-    }
 
+    /* ── Social proof ticker ── */
     .social-proof {
       width: 100%;
       overflow: hidden;
@@ -328,6 +330,7 @@
     }
     .ticker-amount { color: var(--green); font-weight: 700; }
 
+    /* ── CTA ── */
     .cta-wrapper {
       position: fixed;
       bottom: 0; left: 50%;
@@ -344,7 +347,7 @@
       border: none;
       border-radius: 16px;
       padding: 18px;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 800;
       color: #060c08;
       cursor: pointer;
@@ -377,6 +380,7 @@
     }
     .cta-btn:active { transform: scale(0.98) translateY(0); }
 
+    /* ── Modal ── */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -520,12 +524,13 @@
     .modal-btn:active { transform: scale(0.98); }
 
     @media (max-width: 400px) {
-      .headline { font-size: 42px; }
+      .headline { font-size: 48px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Ambient orbs -->
   <div class="bg-orb orb-1"></div>
   <div class="bg-orb orb-2"></div>
   <div class="bg-orb orb-3"></div>
@@ -535,31 +540,33 @@
     <!-- App Icon -->
     <div class="app-icon-wrap">
       <div class="app-icon">
-        <img src="https://i.imgur.com/TYVa0gD.png" alt="Gravy Wallet Logo" />
+        <img src="https://i.imgur.com/zX3ULAW.png" alt="KashKick Logo" />
       </div>
     </div>
 
     <!-- Trending Badge -->
     <div class="trending-badge">
       <div class="trending-dot"></div>
-      Trending in the US
+      Trending in USA
     </div>
 
     <!-- Headline -->
     <div class="headline">
       <span class="white">Get Paid<br></span>
-      <span class="green">To Game</span>
+      <span class="green">to Scroll</span>
     </div>
 
     <p class="subtitle">
-      Join thousands earning daily by playing popular games like <strong>Roblox, Block Blast, 8 Ball Pool,</strong> and more. Activate Gravy Wallet to gain full access.
+      Real cash for your phone time.<br>
+      <strong>$5 just for signing up.</strong><br>
+      Instant PayPal cashout.
     </p>
 
     <!-- Stats -->
     <div class="stats-row">
       <div class="stat">
-        <div class="stat-value">$150–$400+</div>
-        <div class="stat-label">Earned / Week</div>
+        <div class="stat-value">$200–$500+</div>
+        <div class="stat-label">Weekly Earnings</div>
       </div>
       <div class="stat">
         <div class="stat-value">500K+</div>
@@ -581,25 +588,22 @@
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-content">
-          <h3>Add Gravy Pass to Your Wallet</h3>
-          <p>Available on <strong>Apple Wallet (iOS)</strong> &amp; <strong>Google Wallet (Android)</strong></p>
-          <p class="meta">Takes less than 60 seconds &nbsp;•&nbsp; No app download required</p>
+          <h3>Sign up &amp; select 21+</h3>
+          <p>Scroll rewards only unlock for <strong>21+ members</strong>. Select it at signup to access everything.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <h3>Complete Starter Offers</h3>
-          <p>Play games, try apps, or complete simple challenges.</p>
-          <p>Unlock access to popular gaming rewards. <strong>(Roblox, Fortnite, Subway Surfers)</strong></p>
+          <h3>Complete 2 offers to activate scrolling</h3>
+          <p>A quick game or survey. Activates <strong>scroll earning</strong> &amp; all high-paying offers. You earn doing them.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <h3>Get Paid Instantly</h3>
-          <p>Earnings are credited directly to your <strong>Apple Wallet</strong> or <strong>Google Wallet</strong>.</p>
-          <p class="meta">No cashout apps. No waiting.</p>
+          <h3>Get paid</h3>
+          <p>Scroll runs in the background. Cash out to <strong>PayPal, Visa or Crypto</strong>. No minimum.</p>
         </div>
       </div>
     </div>
@@ -608,29 +612,29 @@
 
   <!-- Fixed CTA -->
   <div class="cta-wrapper">
-    <button class="cta-btn" onclick="openModal()">Activate Wallet &amp; Start Earning &nbsp;→</button>
+    <button class="cta-btn" onclick="openModal()">Start Earning Now &nbsp;→</button>
   </div>
 
   <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
     <div class="modal-sheet" id="modalSheet">
       <div class="modal-handle"></div>
-      <div class="modal-icon">👛</div>
-      <div class="modal-tag">One Step Away</div>
-      <div class="modal-title">Activate Your<br><span>Gravy Wallet</span></div>
-      <p class="modal-desc">Add your free Gravy Pass to Apple Wallet or Google Wallet — no app download needed.</p>
+      <div class="modal-icon">🔓</div>
+      <div class="modal-tag">Before You Go</div>
+      <div class="modal-title">Select <span>21+</span> when<br>you sign up</div>
+      <p class="modal-desc">This unlocks the scroll earning feature and all high-paying offers on KashKick.</p>
       <div class="modal-highlight">
-        <div class="modal-highlight-icon">🎮</div>
+        <div class="modal-highlight-icon">💸</div>
         <div class="modal-highlight-text">
-          <strong>Without activating your wallet</strong> you won't be able to access gaming offers or collect your earnings.
+          <strong>Without 21+ selected</strong>, you'll miss out on scroll earnings and premium high-paying offers.
         </div>
       </div>
-      <button class="modal-btn" onclick="goToOffer()">Got It — Let's Go &nbsp;→</button>
+      <button class="modal-btn" onclick="goToOffer()">Got it &nbsp;→</button>
     </div>
   </div>
 
   <script>
-    // URL parameter passthrough
+    // URL parameter passthrough function
     const appendUrlParams = (baseUrl) => {
         const params = window.location.search;
         if (!params) return baseUrl;
@@ -655,13 +659,13 @@
     };
 
     const tickerData = [
-      { init: 'JT', name: 'James T.',    amount: '$47.50',  time: '2 mins ago' },
-      { init: 'SB', name: 'Sarah B.',    amount: '$112.00', time: '5 mins ago' },
-      { init: 'OW', name: 'Owen W.',     amount: '$23.75',  time: '8 mins ago' },
-      { init: 'EC', name: 'Emily C.',    amount: '$89.20',  time: '11 mins ago' },
-      { init: 'GH', name: 'Gary H.',     amount: '$310.00', time: '15 mins ago' },
-      { init: 'CR', name: 'Casey R.',    amount: '$56.40',  time: '18 mins ago' },
-      { init: 'LM', name: 'Liam M.',     amount: '$178.90', time: '21 mins ago' },
+      { init: 'JM', name: 'James M.', amount: '$47.50', time: '2m ago' },
+      { init: 'SR', name: 'Sarah R.', amount: '$112.00', time: '5m ago' },
+      { init: 'DK', name: 'David K.', amount: '$23.75', time: '8m ago' },
+      { init: 'AL', name: 'Ashley L.', amount: '$89.20', time: '11m ago' },
+      { init: 'MR', name: 'Mike R.', amount: '$310.00', time: '15m ago' },
+      { init: 'TC', name: 'Tanya C.', amount: '$56.40', time: '18m ago' },
+      { init: 'BW', name: 'Brandon W.', amount: '$178.90', time: '21m ago' },
     ];
 
     function buildTicker() {
@@ -670,7 +674,7 @@
       track.innerHTML = doubled.map(d => `
         <div class="ticker-item">
           <div class="ticker-avatar">${d.init}</div>
-          <span>${d.name} withdrew</span>
+          <span>${d.name} cashed out</span>
           <span class="ticker-amount">${d.amount}</span>
           <span style="color:#334a33;font-size:11px">${d.time}</span>
         </div>
@@ -690,7 +694,7 @@
     
     // Redirect to offer with params + browser break
     function goToOffer() {
-      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZ3JhdnlwYXNzLTIiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzc3NDk2NTA0Njk0fQ?s1=char-kp-proof-and-29';
+      const baseUrl = 'https://taprkr.com/r/eyJ0Ijoia2FzaGtpY2siLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzc3NTc3NjkyNzYwfQ?s1=char-kp-kktest';
       const finalUrl = appendUrlParams(baseUrl);
       breakToNativeBrowser(finalUrl);
     }
