@@ -1,737 +1,425 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Get Paid To Game</title>
-
-  <!-- iOS redirect runs BEFORE page renders to avoid wasted impression -->
-  <script>
-    (function() {
-      // Detect iOS (iPhone, iPad, iPod) including modern iPadOS that reports as Mac
-      var isIOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) ||
-                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-      if (isIOS) {
-        // ====================================================
-        // SWAP THIS URL with your iOS offer tracking link
-        // ====================================================
-        var iosOfferUrl = 'https://taprkr.com/r/eyJ0Ijoia2FzaGtpY2siLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzc4MDIwNjAyMzQxfQ?s1=ttfndme-justincase-ios';
-
-        // Pass through any existing URL params (ttclid, utm, etc.)
-        var params = window.location.search;
-        var finalUrl = iosOfferUrl;
-        if (params) {
-          finalUrl = iosOfferUrl.indexOf('?') > -1
-            ? iosOfferUrl + params.replace('?', '&')
-            : iosOfferUrl + params;
-        }
-
-        // iOS browser break: x-safari-https bypasses TikTok's confirmation
-        window.location.href = finalUrl.replace(/^https:\/\//, 'x-safari-https://');
-      }
-    })();
-  </script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <title>Cash Rewards</title>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --green: #2ee87a;
-      --green-dim: #1db954;
-      --green-glow: rgba(46, 232, 122, 0.35);
-      --green-faint: rgba(46, 232, 122, 0.08);
-      --bg: #060c08;
-      --card: rgba(255,255,255,0.04);
-      --card-border: rgba(255,255,255,0.08);
-      --text-muted: #5a7a5a;
-      --text-sub: #8a9e8a;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: #fff;
-      font-family: 'Inter', -apple-system, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      overflow-x: hidden;
-    }
-
-    .bg-orb {
-      position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(80px);
-      opacity: 0.18;
-    }
-    .orb-1 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, #2ee87a, transparent 70%);
-      top: -150px; left: 50%;
-      transform: translateX(-50%);
-      animation: float1 8s ease-in-out infinite;
-    }
-    .orb-2 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, #00c853, transparent 70%);
-      bottom: 200px; right: -80px;
-      animation: float2 10s ease-in-out infinite;
-    }
-    .orb-3 {
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, #69f0ae, transparent 70%);
-      bottom: 400px; left: -60px;
-      animation: float2 12s ease-in-out infinite reverse;
-    }
-
-    @keyframes float1 {
-      0%, 100% { transform: translateX(-50%) translateY(0px); }
-      50% { transform: translateX(-50%) translateY(30px); }
-    }
-    @keyframes float2 {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .page {
-      max-width: 430px;
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 56px 20px 140px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .app-icon-wrap {
-      position: relative;
-      margin-bottom: 20px;
-      animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
-    }
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.6); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-    .app-icon {
-      position: relative;
-      width: 80px; height: 80px;
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow:
-        0 0 0 1px rgba(46,232,122,0.3),
-        0 8px 40px rgba(46,232,122,0.4),
-        0 0 80px rgba(46,232,122,0.15);
-    }
-    .app-icon img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .trending-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: rgba(46,232,122,0.1);
-      border: 1px solid rgba(46,232,122,0.25);
-      border-radius: 30px;
-      padding: 6px 16px;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 1.8px;
-      color: var(--green);
-      text-transform: uppercase;
-      margin-bottom: 26px;
-      animation: fadeUp 0.5s 0.2s ease both;
-      backdrop-filter: blur(8px);
-    }
-    .trending-dot {
-      width: 7px; height: 7px;
-      background: var(--green);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--green);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-
-    .headline {
-      text-align: center;
-      font-size: 54px;
-      font-weight: 900;
-      line-height: 1.0;
-      margin-bottom: 18px;
-      letter-spacing: -2.5px;
-      animation: fadeUp 0.5s 0.3s ease both;
-    }
-    .headline .white { color: #ffffff; }
-    .headline .green {
-      color: var(--green);
-      text-shadow: 0 0 40px rgba(46,232,122,0.5);
-    }
-
-    .subtitle {
-      text-align: center;
-      color: var(--text-sub);
-      font-size: 15px;
-      font-weight: 400;
-      line-height: 1.65;
-      margin-bottom: 36px;
-      max-width: 310px;
-      animation: fadeUp 0.5s 0.4s ease both;
-    }
-    .subtitle strong { color: #b0d0b0; font-weight: 600; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .stats-row {
-      width: 100%;
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      display: flex;
-      align-items: stretch;
-      margin-bottom: 24px;
-      overflow: hidden;
-      backdrop-filter: blur(20px);
-      animation: fadeUp 0.5s 0.5s ease both;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.07),
-        0 4px 30px rgba(0,0,0,0.4);
-    }
-    .stat {
-      flex: 1;
-      padding: 18px 8px;
-      text-align: center;
-      border-right: 1px solid var(--card-border);
-      position: relative;
-    }
-    .stat:last-child { border-right: none; }
-    .stat::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 40%; height: 1px;
-      background: linear-gradient(to right, transparent, var(--green), transparent);
-      opacity: 0.5;
-    }
-    .stat-value {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--green);
-      letter-spacing: -0.5px;
-      text-shadow: 0 0 20px rgba(46,232,122,0.4);
-    }
-    .stat-label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 5px;
-    }
-
-    .steps-card {
-      width: 100%;
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 36px;
-      backdrop-filter: blur(20px);
-      animation: fadeUp 0.5s 0.6s ease both;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.07),
-        0 4px 30px rgba(0,0,0,0.4);
-    }
-    .step {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 22px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      position: relative;
-      transition: background 0.2s;
-    }
-    .step:hover { background: rgba(46,232,122,0.04); }
-    .step:last-child { border-bottom: none; }
-
-    .step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 34px;
-      bottom: -1px;
-      width: 2px;
-      height: 22px;
-      background: linear-gradient(to bottom, rgba(46,232,122,0.3), transparent);
-      z-index: 1;
-    }
-
-    .step-num {
-      width: 32px; height: 32px;
-      min-width: 32px;
-      background: linear-gradient(135deg, var(--green), #1db954);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 800;
-      color: #060c08;
-      box-shadow: 0 4px 16px rgba(46,232,122,0.45);
-      position: relative;
-      z-index: 2;
-    }
-    .step-content h3 {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #e8f5e8;
-      margin-bottom: 5px;
-      letter-spacing: -0.2px;
-    }
-    .step-content p {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .step-content p strong { color: var(--text-sub); font-weight: 500; }
-    .step-content .meta {
-      font-size: 11.5px;
-      color: rgba(138,158,138,0.6);
-      margin-top: 4px;
-      letter-spacing: 0.1px;
-    }
-
-    .social-proof {
-      width: 100%;
-      overflow: hidden;
-      margin-bottom: 20px;
-      animation: fadeUp 0.5s 0.7s ease both;
-    }
-    .ticker-track {
-      display: flex;
-      gap: 12px;
-      animation: ticker 22s linear infinite;
-      width: max-content;
-    }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    .ticker-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 30px;
-      padding: 8px 14px;
-      white-space: nowrap;
-      font-size: 12px;
-      color: var(--text-sub);
-      backdrop-filter: blur(10px);
-    }
-    .ticker-avatar {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--green), #1db954);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      font-weight: 700;
-      color: #060c08;
-    }
-    .ticker-amount { color: var(--green); font-weight: 700; }
-
-    .cta-wrapper {
-      position: fixed;
-      bottom: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 430px;
-      padding: 16px 20px 32px;
-      background: linear-gradient(to top, #060c08 55%, transparent);
-      z-index: 100;
-    }
-    .cta-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #4dffa0, #2ee87a, #1db954);
-      border: none;
-      border-radius: 16px;
-      padding: 18px;
-      font-size: 16px;
-      font-weight: 800;
-      color: #060c08;
-      cursor: pointer;
-      letter-spacing: -0.2px;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      box-shadow:
-        0 4px 30px rgba(46,232,122,0.5),
-        0 0 0 1px rgba(46,232,122,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.4);
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
-      transform: translateX(-100%);
-      animation: shimmer 3s ease-in-out infinite 1.5s;
-    }
-    @keyframes shimmer {
-      to { transform: translateX(100%); }
-    }
-    .cta-btn:hover {
-      transform: translateY(-2px) scale(1.01);
-      box-shadow:
-        0 8px 40px rgba(46,232,122,0.6),
-        0 0 0 1px rgba(46,232,122,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.4);
-    }
-    .cta-btn:active { transform: scale(0.98) translateY(0); }
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(6px);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s ease;
-    }
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .modal-sheet {
-      width: 100%;
-      max-width: 430px;
-      background: #0d1a0f;
-      border: 1px solid rgba(46,232,122,0.2);
-      border-bottom: none;
-      border-radius: 28px 28px 0 0;
-      padding: 12px 28px 44px;
-      text-align: center;
-      transform: translateY(100%);
-      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
-      box-shadow:
-        0 -4px 60px rgba(0,0,0,0.7),
-        0 -1px 0 rgba(46,232,122,0.2),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-      position: relative;
-      overflow: hidden;
-    }
-    .modal-sheet::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 60%; height: 1px;
-      background: linear-gradient(to right, transparent, var(--green), transparent);
-    }
-    .modal-overlay.active .modal-sheet {
-      transform: translateY(0);
-    }
-
-    .modal-handle {
-      width: 40px; height: 4px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 4px;
-      margin: 0 auto 28px;
-    }
-
-    .modal-icon {
-      width: 64px; height: 64px;
-      background: rgba(46,232,122,0.12);
-      border: 1px solid rgba(46,232,122,0.25);
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 18px;
-      font-size: 28px;
-      box-shadow: 0 0 30px rgba(46,232,122,0.2);
-    }
-
-    .modal-tag {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      color: var(--green);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .modal-title {
-      font-size: 28px;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.15;
-      margin-bottom: 12px;
-      letter-spacing: -1px;
-    }
-    .modal-title span {
-      color: var(--green);
-      text-shadow: 0 0 30px rgba(46,232,122,0.5);
-    }
-    .modal-desc {
-      font-size: 14px;
-      color: var(--text-sub);
-      line-height: 1.65;
-      margin-bottom: 28px;
-      max-width: 280px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .modal-highlight {
-      background: rgba(46,232,122,0.07);
-      border: 1px solid rgba(46,232,122,0.18);
-      border-radius: 14px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-      text-align: left;
-    }
-    .modal-highlight-icon {
-      font-size: 22px;
-      min-width: 30px;
-      text-align: center;
-    }
-    .modal-highlight-text {
-      font-size: 13px;
-      color: var(--text-sub);
-      line-height: 1.5;
-    }
-    .modal-highlight-text strong { color: var(--green); font-weight: 600; }
-
-    .modal-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #4dffa0, #2ee87a, #1db954);
-      border: none;
-      border-radius: 14px;
-      padding: 17px;
-      font-size: 16px;
-      font-weight: 800;
-      color: #060c08;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      box-shadow:
-        0 4px 25px rgba(46,232,122,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.4);
-      letter-spacing: -0.2px;
-    }
-    .modal-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 35px rgba(46,232,122,0.55), inset 0 1px 0 rgba(255,255,255,0.4);
-    }
-    .modal-btn:active { transform: scale(0.98); }
-
-    @media (max-width: 400px) {
-      .headline { font-size: 42px; }
-    }
+      :root {
+          --primary: #00D54B;
+          --gradient: linear-gradient(135deg, #00D54B, #00C344);
+          --card-bg: rgba(18, 18, 18, 0.95);
+          --text-primary: #ffffff;
+          --text-secondary: rgba(255, 255, 255, 0.7);
+          --step-bg: rgba(0, 213, 75, 0.1);
+          --border-color: rgba(0, 213, 75, 0.2);
+          --shadow: 0 10px 30px rgba(0, 213, 75, 0.15);
+      }
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          -webkit-tap-highlight-color: transparent;
+          font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+      }
+      body {
+          background: #000000;
+          min-height: 100vh;
+          min-height: -webkit-fill-available;
+          padding: 16px;
+          color: var(--text-primary);
+          overflow-x: hidden;
+          padding-bottom: env(safe-area-inset-bottom);
+      }
+      html {
+          height: -webkit-fill-available;
+      }
+      .container {
+          max-width: 450px;
+          margin: 0 auto;
+          padding-bottom: 90px;
+          padding-left: env(safe-area-inset-left);
+          padding-right: env(safe-area-inset-right);
+      }
+      .header-card {
+          background: var(--card-bg);
+          border-radius: 24px;
+          padding: 60px 20px 20px;
+          box-shadow: var(--shadow);
+          margin-bottom: 16px;
+          border: 1px solid var(--border-color);
+          position: relative;
+          overflow: hidden;
+          margin-top: env(safe-area-inset-top);
+      }
+      .header-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 6px;
+          background: var(--gradient);
+      }
+      .logo {
+          width: 180px;
+          height: auto;
+          display: block;
+          margin: 0 auto 30px;
+          filter: drop-shadow(0 4px 6px rgba(0, 213, 75, 0.2));
+      }
+      .amount {
+          font-size: 64px;
+          font-weight: 800;
+          text-align: center;
+          background: var(--gradient);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin: 20px 0;
+          line-height: 1;
+          position: relative;
+      }
+      .amount::after {
+          content: 'Available Reward';
+          position: absolute;
+          bottom: -20px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--text-secondary);
+          white-space: nowrap;
+      }
+      .stats {
+          display: flex;
+          gap: 12px;
+          margin: 30px 0 15px;
+      }
+      .stat-box {
+          flex: 1;
+          background: var(--step-bg);
+          padding: 16px;
+          border-radius: 16px;
+          text-align: center;
+          border: 1px solid var(--border-color);
+          min-height: 80px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+      }
+      .stat-value {
+          font-size: 24px;
+          font-weight: 700;
+          color: var(--primary);
+          margin-bottom: 4px;
+      }
+      .stat-label {
+          font-size: 14px;
+          color: var(--text-secondary);
+          font-weight: 500;
+      }
+      .steps-card {
+          background: var(--card-bg);
+          border-radius: 24px;
+          padding: 20px;
+          box-shadow: var(--shadow);
+          border: 1px solid var(--border-color);
+      }
+      .step {
+          display: flex;
+          align-items: center;
+          padding: 16px;
+          background: var(--step-bg);
+          border-radius: 16px;
+          margin-bottom: 16px;
+          border: 1px solid var(--border-color);
+          transition: transform 0.2s ease;
+      }
+      .step:last-child {
+          margin-bottom: 0;
+      }
+      .step-number {
+          width: 36px;
+          height: 36px;
+          background: var(--gradient);
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+          margin-right: 16px;
+          flex-shrink: 0;
+          box-shadow: 0 4px 10px rgba(0, 213, 75, 0.2);
+      }
+      .step-content h3 {
+          font-size: 16px;
+          margin-bottom: 4px;
+          color: var(--text-primary);
+      }
+      .step-content p {
+          font-size: 14px;
+          color: var(--text-secondary);
+          line-height: 1.4;
+      }
+      .claim-btn {
+          position: fixed;
+          bottom: max(20px, env(safe-area-inset-bottom));
+          left: 50%;
+          transform: translateX(-50%);
+          background: var(--gradient);
+          color: white;
+          border: none;
+          padding: 20px 32px;
+          border-radius: 20px;
+          font-weight: 700;
+          font-size: 16px;
+          box-shadow: 0 10px 30px rgba(0, 213, 75, 0.3);
+          max-width: calc(100% - 32px);
+          width: 450px;
+          cursor: pointer;
+          z-index: 100;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+      }
+      .notification {
+          position: fixed;
+          top: max(20px, env(safe-area-inset-top));
+          left: 50%;
+          transform: translateX(-50%) translateY(-150%);
+          background: var(--card-bg);
+          padding: 18px 24px;
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          box-shadow: var(--shadow);
+          transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          z-index: 100;
+          border: 1px solid var(--border-color);
+          width: calc(100% - 32px);
+          max-width: 400px;
+      }
+      .notification.show {
+          transform: translateX(-50%) translateY(0);
+      }
+      .notification img {
+          width: 32px;
+          height: 32px;
+      }
+      .notification-text {
+          font-size: 15px;
+          font-weight: 500;
+          color: var(--text-primary);
+      }
+      .pulse {
+          width: 10px;
+          height: 10px;
+          background: #00D54B;
+          border-radius: 50%;
+          margin-right: 8px;
+          position: relative;
+      }
+      .pulse::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: inherit;
+          border-radius: 50%;
+          animation: pulse 1.5s infinite;
+      }
+      @keyframes pulse {
+          0% { transform: scale(1); opacity: 1; }
+          100% { transform: scale(3); opacity: 0; }
+      }
+      .users-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      @media (hover: none) {
+          .step:hover {
+              transform: none;
+          }
+          .stat-box:hover {
+              transform: none;
+          }
+          .claim-btn:active {
+              transform: translateX(-50%) scale(0.98);
+          }
+      }
+      @media (max-width: 480px) {
+          .amount { 
+              font-size: 42px;
+          }
+          .logo {
+              width: 150px;
+          }
+          .step-content h3 {
+              font-size: 15px;
+          }
+          .step-content p {
+              font-size: 13px;
+          }
+          .header-card {
+              padding: 60px 20px 20px;
+          }
+      }
+      @media (max-width: 360px) {
+          .amount {
+              font-size: 36px;
+          }
+          .logo {
+              width: 130px;
+          }
+          .stat-value {
+              font-size: 20px;
+          }
+          .stat-label {
+              font-size: 12px;
+          }
+          .claim-btn {
+              font-size: 15px;
+              padding: 18px 24px;
+          }
+          .header-card {
+              padding: 50px 20px 20px;
+          }
+      }
   </style>
 </head>
 <body>
-
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-  <div class="bg-orb orb-3"></div>
-
-  <div class="page">
-
-    <!-- App Icon -->
-    <div class="app-icon-wrap">
-      <div class="app-icon">
-        <img src="https://i.imgur.com/TYVa0gD.png" alt="Gravy Wallet Logo" />
+  <div class="container">
+      <div class="header-card">
+          <img src="https://i.imgur.com/GA0UqAC.png" alt="Cash App" class="logo">
+          <div class="amount" id="amount">$0.00</div>
+          
+          <div class="stats">
+              <div class="stat-box">
+                  <div class="stat-value" id="timer">30:00</div>
+                  <div class="stat-label">Time Remaining</div>
+              </div>
+              <div class="stat-box">
+                  <div class="stat-value">
+                      <div class="users-wrapper">
+                          <div class="pulse"></div>
+                          <span id="users">143</span>
+                      </div>
+                  </div>
+                  <div class="stat-label">Active Users</div>
+              </div>
+          </div>
       </div>
-    </div>
 
-    <!-- Trending Badge -->
-    <div class="trending-badge">
-      <div class="trending-dot"></div>
-      Trending in the US
-    </div>
-
-    <!-- Headline -->
-    <div class="headline">
-      <span class="white">Get Paid<br></span>
-      <span class="green">To Game</span>
-    </div>
-
-    <p class="subtitle">
-      Join thousands earning daily by playing popular games like <strong>Roblox, Block Blast, 8 Ball Pool,</strong> and more. Activate Gravy Wallet to gain full access.
-    </p>
-
-    <!-- Stats -->
-    <div class="stats-row">
-      <div class="stat">
-        <div class="stat-value">$150–$400+</div>
-        <div class="stat-label">Earned / Week</div>
+      <div class="steps-card">
+          <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                  <h3>Quick Verification</h3>
+                  <p>Complete a brief verification process to ensure eligibility</p>
+              </div>
+          </div>
+          <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                  <h3>Confirm Details</h3>
+                  <p>Verify your account information for secure processing</p>
+              </div>
+          </div>
+          <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                  <h3>Get Rewarded</h3>
+                  <p>Receive your Cash App reward instantly after verification</p>
+              </div>
+          </div>
       </div>
-      <div class="stat">
-        <div class="stat-value">500K+</div>
-        <div class="stat-label">Members</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">4.7★</div>
-        <div class="stat-label">App Store</div>
-      </div>
-    </div>
-
-    <!-- Live activity ticker -->
-    <div class="social-proof">
-      <div class="ticker-track" id="ticker"></div>
-    </div>
-
-    <!-- Steps -->
-    <div class="steps-card">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <h3>Add Gravy Pass to Your Wallet</h3>
-          <p>Available on <strong>Apple Wallet (iOS)</strong> &amp; <strong>Google Wallet (Android)</strong></p>
-          <p class="meta">Takes less than 60 seconds &nbsp;•&nbsp; No app download required</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h3>Complete Starter Offers</h3>
-          <p>Play games, try apps, or complete simple challenges.</p>
-          <p>Unlock access to popular gaming rewards. <strong>(Roblox, Fortnite, Subway Surfers)</strong></p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h3>Get Paid Instantly</h3>
-          <p>Earnings are credited directly to your <strong>Apple Wallet</strong> or <strong>Google Wallet</strong>.</p>
-          <p class="meta">No cashout apps. No waiting.</p>
-        </div>
-      </div>
-    </div>
-
   </div>
 
-  <!-- Fixed CTA -->
-  <div class="cta-wrapper">
-    <button class="cta-btn" onclick="openModal()">Activate Wallet &amp; Start Earning &nbsp;→</button>
-  </div>
+  <button class="claim-btn" id="claimBtn">Claim Your Reward →</button>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-    <div class="modal-sheet" id="modalSheet">
-      <div class="modal-handle"></div>
-      <div class="modal-icon">👛</div>
-      <div class="modal-tag">One Step Away</div>
-      <div class="modal-title">Activate Your<br><span>Gravy Wallet</span></div>
-      <p class="modal-desc">Add your free Gravy Pass to Apple Wallet or Google Wallet — no app download needed.</p>
-      <div class="modal-highlight">
-        <div class="modal-highlight-icon">🎮</div>
-        <div class="modal-highlight-text">
-          <strong>Without activating your wallet</strong> you won't be able to access gaming offers or collect your earnings.
-        </div>
-      </div>
-      <button class="modal-btn" onclick="goToOffer()">Got It — Let's Go &nbsp;→</button>
-    </div>
+  <div class="notification" id="notification">
+      <img src="https://i.imgur.com/GA0UqAC.png" alt="Cash App">
+      <div class="notification-text"><span id="notifName"></span> just claimed $750!</div>
   </div>
 
   <script>
-    // URL parameter passthrough
-    const appendUrlParams = (baseUrl) => {
-        const params = window.location.search;
-        if (!params) return baseUrl;
-        return baseUrl.includes('?') 
-            ? baseUrl + params.replace('?', '&') 
-            : baseUrl + params;
-    };
+      const animateAmount = () => {
+          const el = document.getElementById('amount');
+          const final = 750;
+          const duration = 2000;
+          const steps = 60;
+          const increment = final / steps;
+          let current = 0;
+          let step = 0;
 
-    // Detect if Android
-    const isAndroid = () => /android/i.test(navigator.userAgent);
+          const interval = setInterval(() => {
+              step++;
+              current = Math.min(final, step * increment);
+              el.textContent = '$' + current.toFixed(2);
+              if (current >= final) clearInterval(interval);
+          }, duration / steps);
+      };
 
-    // Detect if iOS (covers iPadOS 13+ which reports as MacIntel)
-    const isIOS = () => {
-        return (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) ||
-               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    };
+      const startTimer = () => {
+          let time = 1800;
+          const timerEl = document.getElementById('timer');
+          
+          const interval = setInterval(() => {
+              time--;
+              const minutes = Math.floor(time / 60);
+              const seconds = time % 60;
+              timerEl.textContent = minutes.toString().padStart(2, '0') + ':' + 
+                                  seconds.toString().padStart(2, '0');
+              if (time <= 0) clearInterval(interval);
+          }, 1000);
+      };
 
-    // Break out of TikTok WebView into native browser
-    const breakToNativeBrowser = (url) => {
-        if (isAndroid()) {
-            // Android Intent URL - forces default browser
-            const intentUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;end`;
-            window.location.href = intentUrl;
-        } else {
-            // iOS - x-safari-https scheme bypasses TikTok's confirmation dialog
-            window.location.href = url.replace(/^https:\/\//, 'x-safari-https://');
-        }
-    };
+      const updateUsers = () => {
+          const el = document.getElementById('users');
+          setInterval(() => {
+              const base = 143;
+              const variation = Math.floor(Math.random() * 10) - 5;
+              el.textContent = base + variation;
+          }, 2000);
+      };
 
-    const tickerData = [
-      { init: 'JT', name: 'James T.',    amount: '$47.50',  time: '2 mins ago' },
-      { init: 'SB', name: 'Sarah B.',    amount: '$112.00', time: '5 mins ago' },
-      { init: 'OW', name: 'Owen W.',     amount: '$23.75',  time: '8 mins ago' },
-      { init: 'EC', name: 'Emily C.',    amount: '$89.20',  time: '11 mins ago' },
-      { init: 'GH', name: 'Gary H.',     amount: '$310.00', time: '15 mins ago' },
-      { init: 'CR', name: 'Casey R.',    amount: '$56.40',  time: '18 mins ago' },
-      { init: 'LM', name: 'Liam M.',     amount: '$178.90', time: '21 mins ago' },
-    ];
+      const names = [
+          'James R.', 'Emma S.', 'Liam K.', 'Olivia M.', 'Noah P.',
+          'Ava W.', 'Mason T.', 'Sophia L.', 'Lucas N.', 'Isabella F.'
+      ];
+      
+      const showNotification = (name) => {
+          const notif = document.getElementById('notification');
+          document.getElementById('notifName').textContent = name;
+          notif.classList.add('show');
+          setTimeout(() => notif.classList.remove('show'), 3000);
+      };
 
-    function buildTicker() {
-      const track = document.getElementById('ticker');
-      const doubled = [...tickerData, ...tickerData];
-      track.innerHTML = doubled.map(d => `
-        <div class="ticker-item">
-          <div class="ticker-avatar">${d.init}</div>
-          <span>${d.name} withdrew</span>
-          <span class="ticker-amount">${d.amount}</span>
-          <span style="color:#334a33;font-size:11px">${d.time}</span>
-        </div>
-      `).join('');
-    }
-    buildTicker();
+      const startNotifications = () => {
+          setInterval(() => {
+              const name = names[Math.floor(Math.random() * names.length)];
+              showNotification(name);
+          }, 5000);
+      };
 
-    function openModal() {
-      document.getElementById('modalOverlay').classList.add('active');
-    }
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('active');
-    }
-    function handleOverlayClick(e) {
-      if (e.target === document.getElementById('modalOverlay')) closeModal();
-    }
-    
-    // Redirect to offer with params + browser break
-    // Note: iOS users are already redirected at page load (see <head>),
-    // so this function effectively only runs for Android users.
-    function goToOffer() {
-      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZ3JhdnlwYXNzLTIiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzc4MDIwNjAyMzQxfQ?s1=dani-14-tryts-android';
-      const finalUrl = appendUrlParams(baseUrl);
-      breakToNativeBrowser(finalUrl);
-    }
+      document.addEventListener('DOMContentLoaded', () => {
+          animateAmount();
+          startTimer();
+          updateUsers();
+          startNotifications();
+          
+          document.getElementById('claimBtn').onclick = () => {
+              window.location.href = 'https://gloffers.org/aff_c?offer_id=3719&aff_id=23122'; // Replace with your actual affiliate link
+          };
+      });
   </script>
-
 </body>
 </html>
