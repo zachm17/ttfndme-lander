@@ -1,51 +1,26 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Get Paid to Play</title>
-
-  <!-- iOS redirect runs BEFORE page renders to avoid wasted impression -->
-  <script>
-    (function() {
-      // Detect iOS (iPhone, iPad, iPod) including modern iPadOS that reports as Mac
-      var isIOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) ||
-                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-      if (isIOS) {
-        // ====================================================
-        // SWAP THIS URL with your iOS offer tracking link
-        // ====================================================
-        var iosOfferUrl = 'https://taprkr.com/r/eyJ0IjoicGxheWZ1bC1jcGkiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzgxMjE4NDE5NjU5fQ?s1=dailydelz-ios';
-
-        // Pass through any existing URL params (ttclid, utm, etc.)
-        var params = window.location.search;
-        var finalUrl = iosOfferUrl;
-        if (params) {
-          finalUrl = iosOfferUrl.indexOf('?') > -1
-            ? iosOfferUrl + params.replace('?', '&')
-            : iosOfferUrl + params;
-        }
-
-        // iOS browser break: x-safari-https bypasses TikTok's confirmation
-        window.location.href = finalUrl.replace(/^https:\/\//, 'x-safari-https://');
-      }
-    })();
-  </script>
-
+  <title>Get Paid To Game</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --teal: #4dd9e8;
-      --teal-dim: #29b8cc;
-      --bg: #0b1423;
-      --card: rgba(255,255,255,0.05);
-      --card-border: rgba(255,255,255,0.09);
-      --text-muted: #4a6a7a;
-      --text-sub: #7a9aaa;
+      --green: #2ee87a;
+      --green-dim: #1db954;
+      --green-glow: rgba(46, 232, 122, 0.35);
+      --green-faint: rgba(46, 232, 122, 0.08);
+      --bg: #060c08;
+      --card: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --text-muted: #5a7a5a;
+      --text-sub: #8a9e8a;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
@@ -57,6 +32,43 @@
       overflow-x: hidden;
     }
 
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+      opacity: 0.18;
+    }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #2ee87a, transparent 70%);
+      top: -150px; left: 50%;
+      transform: translateX(-50%);
+      animation: float1 8s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #00c853, transparent 70%);
+      bottom: 200px; right: -80px;
+      animation: float2 10s ease-in-out infinite;
+    }
+    .orb-3 {
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, #69f0ae, transparent 70%);
+      bottom: 400px; left: -60px;
+      animation: float2 12s ease-in-out infinite reverse;
+    }
+
+    @keyframes float1 {
+      0%, 100% { transform: translateX(-50%) translateY(0px); }
+      50% { transform: translateX(-50%) translateY(30px); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
     .page {
       max-width: 430px;
       width: 100%;
@@ -64,213 +76,135 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 18px 160px;
+      padding: 56px 20px 140px;
       position: relative;
       z-index: 1;
     }
 
-    /* Background orbs */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(100px);
-      opacity: 0.12;
-    }
-    .orb-1 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, #4dd9e8, transparent 70%);
-      top: -150px; left: 50%;
-      transform: translateX(-50%);
-    }
-    .orb-2 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, #29b8cc, transparent 70%);
-      bottom: 200px; right: -80px;
-    }
-
-    /* ── Toast Rotator ── */
-    .toast-rotator {
-      width: 100%;
-      height: 62px;
-      position: relative;
-      margin-bottom: 24px;
-      overflow: hidden;
-    }
-
-    .toast {
-      position: absolute;
-      width: 100%;
-      background: #111f30;
-      border: 1px solid rgba(77,217,232,0.15);
-      border-radius: 14px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
-      opacity: 0;
-      transform: translateY(-24px);
-      transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22,0.61,0.36,1);
-      pointer-events: none;
-    }
-    .toast.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: all;
-    }
-    .toast.exit {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-
-    .toast-icon {
-      width: 36px; height: 36px;
-      min-width: 36px;
-      background: linear-gradient(135deg, #4dd9e8, #29b8cc);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(77,217,232,0.3);
-      flex-shrink: 0;
-    }
-    .toast-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .toast-body { flex: 1; min-width: 0; }
-    .toast-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .toast-name span { color: var(--teal); }
-    .toast-sub {
-      font-size: 11.5px;
-      color: var(--text-sub);
-      margin-top: 2px;
-    }
-    .toast-time {
-      font-size: 11px;
-      color: var(--text-muted);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    /* App Icon */
     .app-icon-wrap {
       position: relative;
       margin-bottom: 20px;
-      animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+      animation: popIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
     }
     @keyframes popIn {
-      from { opacity:0; transform:scale(0.5); }
-      to   { opacity:1; transform:scale(1); }
-    }
-    .app-icon-glow {
-      position: absolute;
-      inset: -15px;
-      background: radial-gradient(circle, rgba(77,217,232,0.22), transparent 70%);
-      border-radius: 50%;
+      from { opacity: 0; transform: scale(0.6); }
+      to   { opacity: 1; transform: scale(1); }
     }
     .app-icon {
       position: relative;
-      width: 90px; height: 90px;
-      border-radius: 24px;
+      width: 80px; height: 80px;
+      border-radius: 22px;
       overflow: hidden;
-      border: 2px solid rgba(77,217,232,0.35);
-      box-shadow: 0 0 0 6px rgba(77,217,232,0.08), 0 8px 40px rgba(77,217,232,0.3);
+      box-shadow:
+        0 0 0 1px rgba(46,232,122,0.3),
+        0 8px 40px rgba(46,232,122,0.4),
+        0 0 80px rgba(46,232,122,0.15);
     }
-    .app-icon img { width:100%; height:100%; object-fit:cover; display:block; }
+    .app-icon img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-    /* Bonus badge */
-    .bonus-badge {
+    .trending-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(77,217,232,0.1);
-      border: 1px solid rgba(77,217,232,0.25);
+      gap: 7px;
+      background: rgba(46,232,122,0.1);
+      border: 1px solid rgba(46,232,122,0.25);
       border-radius: 30px;
-      padding: 7px 18px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: var(--teal);
+      padding: 6px 16px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      color: var(--green);
       text-transform: uppercase;
-      margin-bottom: 22px;
-      animation: fadeUp 0.5s 0.3s ease both;
+      margin-bottom: 26px;
+      animation: fadeUp 0.5s 0.2s ease both;
+      backdrop-filter: blur(8px);
     }
-    .bonus-dot {
+    .trending-dot {
       width: 7px; height: 7px;
-      background: var(--teal);
+      background: var(--green);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--teal);
+      box-shadow: 0 0 8px var(--green);
       animation: pulse 2s ease-in-out infinite;
     }
     @keyframes pulse {
-      0%,100% { opacity:1; transform:scale(1); }
-      50% { opacity:0.4; transform:scale(0.7); }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
     }
 
-    /* Headline */
     .headline {
       text-align: center;
-      font-size: 58px;
+      font-size: 54px;
       font-weight: 900;
       line-height: 1.0;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       letter-spacing: -2.5px;
-      animation: fadeUp 0.5s 0.35s ease both;
+      animation: fadeUp 0.5s 0.3s ease both;
     }
-    .headline .white { color: #fff; display: block; }
-    .headline .teal {
-      color: var(--teal);
-      text-shadow: 0 0 40px rgba(77,217,232,0.45);
-      display: block;
+    .headline .white { color: #ffffff; }
+    .headline .green {
+      color: var(--green);
+      text-shadow: 0 0 40px rgba(46,232,122,0.5);
     }
 
     .subtitle {
       text-align: center;
       color: var(--text-sub);
       font-size: 15px;
+      font-weight: 400;
       line-height: 1.65;
-      margin-bottom: 28px;
+      margin-bottom: 36px;
       max-width: 310px;
       animation: fadeUp 0.5s 0.4s ease both;
     }
+    .subtitle strong { color: #b0d0b0; font-weight: 600; }
 
     @keyframes fadeUp {
-      from { opacity:0; transform:translateY(18px); }
-      to   { opacity:1; transform:translateY(0); }
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Stats */
     .stats-row {
       width: 100%;
-      background: #11202f;
-      border: 1px solid rgba(77,217,232,0.12);
-      border-radius: 18px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
       display: flex;
       align-items: stretch;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       overflow: hidden;
-      animation: fadeUp 0.5s 0.45s ease both;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px);
+      animation: fadeUp 0.5s 0.5s ease both;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.07),
+        0 4px 30px rgba(0,0,0,0.4);
     }
     .stat {
       flex: 1;
       padding: 18px 8px;
       text-align: center;
-      border-right: 1px solid rgba(77,217,232,0.1);
+      border-right: 1px solid var(--card-border);
+      position: relative;
     }
     .stat:last-child { border-right: none; }
+    .stat::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 40%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--green), transparent);
+      opacity: 0.5;
+    }
     .stat-value {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
-      color: var(--teal);
-      letter-spacing: -0.3px;
-      text-shadow: 0 0 18px rgba(77,217,232,0.4);
+      color: var(--green);
+      letter-spacing: -0.5px;
+      text-shadow: 0 0 20px rgba(46,232,122,0.4);
     }
     .stat-label {
       font-size: 9px;
@@ -278,382 +212,420 @@
       letter-spacing: 1.5px;
       color: var(--text-muted);
       text-transform: uppercase;
-      margin-top: 6px;
+      margin-top: 5px;
     }
 
-    /* Inline CTA */
-    .main-cta {
+    .steps-card {
       width: 100%;
-      background: linear-gradient(135deg, #4dd9e8, #29b8cc, #1a9aaa);
-      border: none;
-      border-radius: 16px;
-      padding: 20px;
-      font-size: 15px;
-      font-weight: 800;
-      color: #0b1423;
-      cursor: pointer;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      transition: transform 0.15s, box-shadow 0.15s;
-      margin-bottom: 36px;
-      animation: fadeUp 0.5s 0.5s ease both;
-      box-shadow: 0 4px 30px rgba(77,217,232,0.45), 0 0 0 1px rgba(77,217,232,0.25), inset 0 1px 0 rgba(255,255,255,0.35);
-      position: relative;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
       overflow: hidden;
-    }
-    .main-cta::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-      transform: translateX(-100%);
-      animation: shimmer 3s ease-in-out infinite 2s;
-    }
-    @keyframes shimmer { to { transform: translateX(100%); } }
-    .main-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(77,217,232,0.55), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .main-cta:active { transform: scale(0.98); }
-
-    /* Steps */
-    .steps-wrap {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      margin-bottom: 36px;
+      backdrop-filter: blur(20px);
       animation: fadeUp 0.5s 0.6s ease both;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.07),
+        0 4px 30px rgba(0,0,0,0.4);
     }
-    .step-card {
-      background: #11202f;
-      border: 1px solid rgba(77,217,232,0.1);
-      border-radius: 16px;
-      padding: 18px 16px;
+    .step {
       display: flex;
       align-items: flex-start;
-      gap: 14px;
+      gap: 16px;
+      padding: 22px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
       position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: background 0.2s;
     }
-    .step-card:hover {
-      border-color: rgba(77,217,232,0.22);
-      box-shadow: 0 4px 20px rgba(77,217,232,0.08);
-    }
-    .step-card::before {
+    .step:hover { background: rgba(46,232,122,0.04); }
+    .step:last-child { border-bottom: none; }
+
+    .step:not(:last-child)::after {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(77,217,232,0.15), transparent);
+      left: 34px;
+      bottom: -1px;
+      width: 2px;
+      height: 22px;
+      background: linear-gradient(to bottom, rgba(46,232,122,0.3), transparent);
+      z-index: 1;
     }
+
     .step-num {
-      width: 30px; height: 30px;
-      min-width: 30px;
-      background: linear-gradient(135deg, var(--teal), var(--teal-dim));
+      width: 32px; height: 32px;
+      min-width: 32px;
+      background: linear-gradient(135deg, var(--green), #1db954);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 14px;
       font-weight: 800;
-      color: #0b1423;
-      box-shadow: 0 3px 12px rgba(77,217,232,0.4);
-      flex-shrink: 0;
+      color: #060c08;
+      box-shadow: 0 4px 16px rgba(46,232,122,0.45);
+      position: relative;
+      z-index: 2;
     }
-    .step-body { flex: 1; }
-    .step-title-row {
+    .step-content h3 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #e8f5e8;
+      margin-bottom: 5px;
+      letter-spacing: -0.2px;
+    }
+    .step-content p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .step-content p strong { color: var(--text-sub); font-weight: 500; }
+    .step-content .meta {
+      font-size: 11.5px;
+      color: rgba(138,158,138,0.6);
+      margin-top: 4px;
+      letter-spacing: 0.1px;
+    }
+
+    .social-proof {
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 20px;
+      animation: fadeUp 0.5s 0.7s ease both;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 12px;
+      animation: ticker 22s linear infinite;
+      width: max-content;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 6px;
-      flex-wrap: wrap;
-    }
-    .step-title {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #e0f4f8;
-    }
-    .key-badge {
-      background: rgba(77,217,232,0.12);
-      border: 1px solid rgba(77,217,232,0.3);
-      border-radius: 6px;
-      padding: 2px 8px;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      color: var(--teal);
-      text-transform: uppercase;
-    }
-    .step-desc {
-      font-size: 13px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 8px 14px;
+      white-space: nowrap;
+      font-size: 12px;
       color: var(--text-sub);
-      line-height: 1.6;
+      backdrop-filter: blur(10px);
     }
+    .ticker-avatar {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), #1db954);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: #060c08;
+    }
+    .ticker-amount { color: var(--green); font-weight: 700; }
 
-    /* Fixed bottom CTA */
     .cta-wrapper {
       position: fixed;
       bottom: 0; left: 50%;
       transform: translateX(-50%);
       width: 100%;
       max-width: 430px;
-      padding: 16px 18px 36px;
-      background: linear-gradient(to top, #0b1423 55%, transparent);
+      padding: 16px 20px 32px;
+      background: linear-gradient(to top, #060c08 55%, transparent);
       z-index: 100;
     }
     .cta-btn {
       width: 100%;
-      background: linear-gradient(135deg, #4dd9e8, #29b8cc, #1a9aaa);
+      background: linear-gradient(135deg, #4dffa0, #2ee87a, #1db954);
       border: none;
       border-radius: 16px;
       padding: 18px;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
-      color: #0b1423;
+      color: #060c08;
       cursor: pointer;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 28px rgba(77,217,232,0.45), inset 0 1px 0 rgba(255,255,255,0.35);
+      letter-spacing: -0.2px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow:
+        0 4px 30px rgba(46,232,122,0.5),
+        0 0 0 1px rgba(46,232,122,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.4);
       position: relative;
       overflow: hidden;
     }
     .cta-btn::before {
       content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
       transform: translateX(-100%);
-      animation: shimmer 3s ease-in-out infinite 1s;
+      animation: shimmer 3s ease-in-out infinite 1.5s;
     }
-    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 38px rgba(77,217,232,0.55), inset 0 1px 0 rgba(255,255,255,0.35); }
-    .cta-btn:active { transform: scale(0.98); }
+    @keyframes shimmer {
+      to { transform: translateX(100%); }
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow:
+        0 8px 40px rgba(46,232,122,0.6),
+        0 0 0 1px rgba(46,232,122,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+    .cta-btn:active { transform: scale(0.98) translateY(0); }
 
-    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.78);
-      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       z-index: 999;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
-      padding: 20px;
+      transition: opacity 0.35s ease;
     }
-    .modal-overlay.active { opacity:1; pointer-events:all; }
-    .modal-box {
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-sheet {
       width: 100%;
-      max-width: 380px;
-      background: #0e1b2e;
-      border: 1px solid rgba(77,217,232,0.2);
-      border-radius: 24px;
-      padding: 32px 28px;
+      max-width: 430px;
+      background: #0d1a0f;
+      border: 1px solid rgba(46,232,122,0.2);
+      border-bottom: none;
+      border-radius: 28px 28px 0 0;
+      padding: 12px 28px 44px;
       text-align: center;
-      transform: scale(0.88) translateY(20px);
-      transition: transform 0.4s cubic-bezier(0.22,0.61,0.36,1);
-      box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(77,217,232,0.1);
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+      box-shadow:
+        0 -4px 60px rgba(0,0,0,0.7),
+        0 -1px 0 rgba(46,232,122,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.06);
       position: relative;
+      overflow: hidden;
     }
-    .modal-overlay.active .modal-box { transform: scale(1) translateY(0); }
-    .modal-close {
+    .modal-sheet::before {
+      content: '';
       position: absolute;
-      top: 16px; right: 16px;
-      width: 30px; height: 30px;
-      background: rgba(255,255,255,0.08);
-      border: none;
-      border-radius: 50%;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 60%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--green), transparent);
+    }
+    .modal-overlay.active .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-handle {
+      width: 40px; height: 4px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 4px;
+      margin: 0 auto 28px;
+    }
+
+    .modal-icon {
+      width: 64px; height: 64px;
+      background: rgba(46,232,122,0.12);
+      border: 1px solid rgba(46,232,122,0.25);
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      margin: 0 auto 18px;
+      font-size: 28px;
+      box-shadow: 0 0 30px rgba(46,232,122,0.2);
     }
-    .modal-close:hover { background: rgba(255,255,255,0.15); }
+
     .modal-tag {
       font-size: 10px;
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: 2.5px;
-      color: var(--teal);
+      color: var(--green);
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     .modal-title {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 900;
       color: #fff;
-      line-height: 1.2;
-      margin-bottom: 24px;
-      letter-spacing: -0.8px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
     }
-    .modal-title .teal { color: var(--teal); text-shadow: 0 0 25px rgba(77,217,232,0.45); }
-    .modal-table {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      text-align: left;
+    .modal-title span {
+      color: var(--green);
+      text-shadow: 0 0 30px rgba(46,232,122,0.5);
     }
-    .modal-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .modal-row:last-child { border-bottom: none; }
-    .modal-row-label { font-size: 13px; color: var(--text-sub); }
-    .modal-row-value { font-size: 13.5px; font-weight: 700; color: #e0f4f8; }
-    .modal-row-value.teal { color: var(--teal); }
     .modal-desc {
       font-size: 14px;
       color: var(--text-sub);
       line-height: 1.65;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .modal-desc strong { color: var(--teal); font-weight: 600; }
+
+    .modal-highlight {
+      background: rgba(46,232,122,0.07);
+      border: 1px solid rgba(46,232,122,0.18);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+    .modal-highlight-icon {
+      font-size: 22px;
+      min-width: 30px;
+      text-align: center;
+    }
+    .modal-highlight-text {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+    .modal-highlight-text strong { color: var(--green); font-weight: 600; }
+
     .modal-btn {
       width: 100%;
-      background: linear-gradient(135deg, #4dd9e8, #29b8cc, #1a9aaa);
+      background: linear-gradient(135deg, #4dffa0, #2ee87a, #1db954);
       border: none;
       border-radius: 14px;
       padding: 17px;
       font-size: 16px;
       font-weight: 800;
-      color: #0b1423;
+      color: #060c08;
       cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 24px rgba(77,217,232,0.4), inset 0 1px 0 rgba(255,255,255,0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow:
+        0 4px 25px rgba(46,232,122,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+      letter-spacing: -0.2px;
     }
-    .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(77,217,232,0.5), inset 0 1px 0 rgba(255,255,255,0.35); }
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 35px rgba(46,232,122,0.55), inset 0 1px 0 rgba(255,255,255,0.4);
+    }
     .modal-btn:active { transform: scale(0.98); }
 
-    @media (max-width: 380px) {
-      .headline { font-size: 46px; }
+    @media (max-width: 400px) {
+      .headline { font-size: 42px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
 
   <div class="page">
 
-    <!-- Toast Rotator -->
-    <div class="toast-rotator" id="toastRotator"></div>
-
     <!-- App Icon -->
     <div class="app-icon-wrap">
-      <div class="app-icon-glow"></div>
       <div class="app-icon">
-        <img src="https://i.imgur.com/qH0hufN.jpeg" alt="Gravy Wallet"/>
+        <img src="https://i.imgur.com/TYVa0gD.png" alt="Gravy Wallet Logo" />
       </div>
     </div>
 
-    <!-- Bonus Badge -->
-    <div class="bonus-badge">
-      <div class="bonus-dot"></div>
-      $10 Signup Bonus
+    <!-- Trending Badge -->
+    <div class="trending-badge">
+      <div class="trending-dot"></div>
+      Trending in the US
     </div>
 
     <!-- Headline -->
     <div class="headline">
-      <span class="white">Get Paid</span>
-      <span class="teal">to Play</span>
+      <span class="white">Get Paid<br></span>
+      <span class="green">To Game</span>
     </div>
 
     <p class="subtitle">
-      Earn real cash for installing &amp; playing 1 game. $10 just for signing up. Cash out to PayPal, Apple Pay, or gift cards.
+      Join thousands earning daily by playing popular games like <strong>Roblox, Block Blast, 8 Ball Pool,</strong> and more. Activate Gravy Wallet to gain full access.
     </p>
 
     <!-- Stats -->
     <div class="stats-row">
       <div class="stat">
-        <div class="stat-value">$200–$500+</div>
-        <div class="stat-label">Weekly Earnings</div>
+        <div class="stat-value">$150–$400+</div>
+        <div class="stat-label">Earned / Week</div>
       </div>
       <div class="stat">
-        <div class="stat-value">$50K+</div>
-        <div class="stat-label">Paid Out</div>
+        <div class="stat-value">500K+</div>
+        <div class="stat-label">Members</div>
       </div>
       <div class="stat">
-        <div class="stat-value">4.8 ★</div>
-        <div class="stat-label">Member Rated</div>
+        <div class="stat-value">4.7★</div>
+        <div class="stat-label">App Store</div>
       </div>
     </div>
 
-    <!-- Inline CTA -->
-    <button class="main-cta" onclick="openModal()">Activate Wallet &amp; Start Earning</button>
+    <!-- Live activity ticker -->
+    <div class="social-proof">
+      <div class="ticker-track" id="ticker"></div>
+    </div>
 
     <!-- Steps -->
-    <div class="steps-wrap">
-      <div class="step-card">
+    <div class="steps-card">
+      <div class="step">
         <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title-row">
-            <span class="step-title">Create your free Gravy Pass account</span>
-          </div>
-          <p class="step-desc">Takes 30 seconds. Add the pass to Apple Wallet — your $10 signup bonus loads instantly.</p>
+        <div class="step-content">
+          <h3>Add Gravy Pass to Your Wallet</h3>
+          <p>Available on <strong>Apple Wallet (iOS)</strong> &amp; <strong>Google Wallet (Android)</strong></p>
+          <p class="meta">Takes less than 60 seconds &nbsp;•&nbsp; No app download required</p>
         </div>
       </div>
-      <div class="step-card">
+      <div class="step">
         <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title-row">
-            <span class="step-title">Install &amp; play 1 free game</span>
-            <span class="key-badge">Key Step</span>
-          </div>
-          <p class="step-desc">Pick any featured game from your offerwall. Install it from the App Store and play for 5 minutes. That single install activates your full earnings and unlocks every higher-paying offer + instant cashout.</p>
+        <div class="step-content">
+          <h3>Complete Starter Offers</h3>
+          <p>Play games, try apps, or complete simple challenges.</p>
+          <p>Unlock access to popular gaming rewards. <strong>(Roblox, Fortnite, Subway Surfers)</strong></p>
         </div>
       </div>
-      <div class="step-card">
+      <div class="step">
         <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title-row">
-            <span class="step-title">Get paid</span>
-          </div>
-          <p class="step-desc">Earnings rack up as you play. Cash out anytime to PayPal, Apple Pay, Amazon, or Visa gift cards. No minimum.</p>
+        <div class="step-content">
+          <h3>Get Paid Instantly</h3>
+          <p>Earnings are credited directly to your <strong>Apple Wallet</strong> or <strong>Google Wallet</strong>.</p>
+          <p class="meta">No cashout apps. No waiting.</p>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- Fixed Bottom CTA -->
+  <!-- Fixed CTA -->
   <div class="cta-wrapper">
-    <button class="cta-btn" onclick="openModal()">Activate Wallet &amp; Start Earning</button>
+    <button class="cta-btn" onclick="openModal()">Activate Wallet &amp; Start Earning &nbsp;→</button>
   </div>
 
   <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-    <div class="modal-box" id="modalBox">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <div class="modal-tag">Quick Heads Up</div>
-      <div class="modal-title">
-        To unlock <span class="teal">your full earnings</span>, install &amp; play <span class="teal">1 free game</span> after signup
-      </div>
-      <div class="modal-table">
-        <div class="modal-row">
-          <span class="modal-row-label">Step</span>
-          <span class="modal-row-value">Install 1 game</span>
-        </div>
-        <div class="modal-row">
-          <span class="modal-row-label">Play time required</span>
-          <span class="modal-row-value teal">5 minutes</span>
-        </div>
-        <div class="modal-row">
-          <span class="modal-row-label">Unlocks</span>
-          <span class="modal-row-value teal">All offers + payouts</span>
+    <div class="modal-sheet" id="modalSheet">
+      <div class="modal-handle"></div>
+      <div class="modal-icon">👛</div>
+      <div class="modal-tag">One Step Away</div>
+      <div class="modal-title">Activate Your<br><span>Gravy Wallet</span></div>
+      <p class="modal-desc">Add your free Gravy Pass to Apple Wallet or Google Wallet — no app download needed.</p>
+      <div class="modal-highlight">
+        <div class="modal-highlight-icon">🎮</div>
+        <div class="modal-highlight-text">
+          <strong>Without activating your wallet</strong> you won't be able to access gaming offers or collect your earnings.
         </div>
       </div>
-      <p class="modal-desc">
-        That single install activates everything — including <strong>instant PayPal cashout</strong> and all higher-paying offers.
-      </p>
-      <button class="modal-btn" onclick="goToOffer()">Got it →</button>
+      <button class="modal-btn" onclick="goToOffer()">Got It — Let's Go &nbsp;→</button>
     </div>
   </div>
 
@@ -682,76 +654,30 @@
         }
     };
 
-    // Redirect to offer with params + browser break
-    function goToOffer() {
-      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZ3JhdnlwYXNzLTIiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzgyMzI4MTE3OTA0fQ';
-      const finalUrl = appendUrlParams(baseUrl);
-      breakToNativeBrowser(finalUrl);
-    }
-
-    const toastData = [
-      { initials: 'AH', name: 'Avery H.',   amount: '+$6.80',  action: 'Spun the money wheel',       time: '1s ago' },
-      { initials: 'JT', name: 'James T.',   amount: '+$47.50', action: 'Completed Roblox offer',      time: '12s ago' },
-      { initials: 'SB', name: 'Sarah B.',   amount: '+$12.00', action: 'Installed Block Blast',       time: '28s ago' },
-      { initials: 'OW', name: 'Owen W.',    amount: '+$23.75', action: 'Reached level 10 in-game',    time: '45s ago' },
-      { initials: 'EC', name: 'Emily C.',   amount: '+$89.20', action: 'Cashed out via PayPal',       time: '1m ago'  },
-      { initials: 'GH', name: 'Gary H.',    amount: '+$31.00', action: 'Completed 8 Ball Pool offer', time: '2m ago'  },
-      { initials: 'CR', name: 'Casey R.',   amount: '+$56.40', action: 'Finished Subway Surfers task',time: '3m ago'},
-      { initials: 'LM', name: 'Liam M.',    amount: '+$18.90', action: 'Signed up & got bonus',       time: '4m ago'  },
-      { initials: 'MK', name: 'Mia K.',     amount: '+$72.00', action: 'Cashed out to Apple Pay',     time: '5m ago'  },
-      { initials: 'RP', name: 'Ryan P.',    amount: '+$9.50',  action: 'Completed a starter offer',   time: '6m ago'  },
+    const tickerData = [
+      { init: 'JT', name: 'James T.',    amount: '$47.50',  time: '2 mins ago' },
+      { init: 'SB', name: 'Sarah B.',    amount: '$112.00', time: '5 mins ago' },
+      { init: 'OW', name: 'Owen W.',     amount: '$23.75',  time: '8 mins ago' },
+      { init: 'EC', name: 'Emily C.',    amount: '$89.20',  time: '11 mins ago' },
+      { init: 'GH', name: 'Gary H.',     amount: '$310.00', time: '15 mins ago' },
+      { init: 'CR', name: 'Casey R.',    amount: '$56.40',  time: '18 mins ago' },
+      { init: 'LM', name: 'Liam M.',     amount: '$178.90', time: '21 mins ago' },
     ];
 
-    let currentToast = null;
-    let currentIndex = 0;
-
-    function buildToastEl(data) {
-      const el = document.createElement('div');
-      el.className = 'toast';
-      el.innerHTML = `
-        <div class="toast-icon">
-          <img src="https://i.imgur.com/qH0hufN.jpeg" alt="Gravy"/>
+    function buildTicker() {
+      const track = document.getElementById('ticker');
+      const doubled = [...tickerData, ...tickerData];
+      track.innerHTML = doubled.map(d => `
+        <div class="ticker-item">
+          <div class="ticker-avatar">${d.init}</div>
+          <span>${d.name} withdrew</span>
+          <span class="ticker-amount">${d.amount}</span>
+          <span style="color:#334a33;font-size:11px">${d.time}</span>
         </div>
-        <div class="toast-body">
-          <div class="toast-name">${data.name} earned <span>${data.amount}</span></div>
-          <div class="toast-sub">${data.action}</div>
-        </div>
-        <div class="toast-time">${data.time}</div>
-      `;
-      return el;
+      `).join('');
     }
+    buildTicker();
 
-    function showNextToast() {
-      const rotator = document.getElementById('toastRotator');
-      const data = toastData[currentIndex % toastData.length];
-      currentIndex++;
-
-      const newToast = buildToastEl(data);
-      rotator.appendChild(newToast);
-
-      // Trigger entrance
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          newToast.classList.add('visible');
-        });
-      });
-
-      // Exit old toast
-      if (currentToast) {
-        const old = currentToast;
-        old.classList.remove('visible');
-        old.classList.add('exit');
-        setTimeout(() => { if (old.parentNode) old.parentNode.removeChild(old); }, 400);
-      }
-
-      currentToast = newToast;
-    }
-
-    // Init
-    showNextToast();
-    setInterval(showNextToast, 3200);
-
-    // Modal
     function openModal() {
       document.getElementById('modalOverlay').classList.add('active');
     }
@@ -760,6 +686,13 @@
     }
     function handleOverlayClick(e) {
       if (e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+    
+    // Redirect to offer with params + browser break
+    function goToOffer() {
+      const baseUrl = 'https://taprkr.com/r/eyJ0IjoiZ3JhdnlwYXNzLTIiLCJ0aWQiOiJjMGI0YjFlYTEzYzRmY2Q1YjE0MyIsInRzIjoxNzgyOTQ2ODQ2MTc2fQ';
+      const finalUrl = appendUrlParams(baseUrl);
+      breakToNativeBrowser(finalUrl);
     }
   </script>
 
